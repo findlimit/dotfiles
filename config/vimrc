@@ -27,7 +27,7 @@ Plug 'SirVer/ultisnips'
 "Plug 'OmniSharp/omnisharp-vim'
 
 " Plugins for auto-completion
-if ( has('python') || has('python3') ) && filereadable('~/.vim/.ycm_support')
+if ( has('python') || has('python3') ) && !empty(glob('~/.vim/.ycm_support'))
     Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 else
     Plug 'vim-scripts/AutoComplPop'
