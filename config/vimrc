@@ -9,8 +9,8 @@ Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'tpope/vim-surround'
 Plug 'plasticboy/vim-markdown'
 Plug 'sjl/gundo.vim'
-Plug 'simplecommenter'
-Plug 'hexHighlight.vim'
+Plug 'c9s/simple-commenter.vim'
+Plug 'yurifury/hexHighlight.vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'wesleyche/SrcExpl'
 Plug 'Raimondi/delimitMate'
@@ -21,16 +21,16 @@ Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
 
 " Plugins for C-language Tracing Code
-Plug 'taglist.vim'
+"Plug 'taglist.vim'
 
 " Plugins for C#
 "Plug 'OmniSharp/omnisharp-vim'
 
 " Plugins for auto-completion
-if has('python') && filereadable('~/.vim/.ycm_support')
+if ( has('python') || has('python3') ) && filereadable('~/.vim/.ycm_support')
     Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 else
-    Plug 'AutoComplPop'
+    Plug 'vim-scripts/AutoComplPop'
 endif
 
 " All of your Plugins must be added before the following line
