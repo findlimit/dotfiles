@@ -1,3 +1,30 @@
-- clean: []
-- link: {}
-- shell: []
+- shell:
+  -
+    command: git submodule update --init --recursive
+    description: Installing submodules
+    stdout: true
+
+- defaults:
+    link:
+      relink: true
+      create: true
+
+- clean: ['~']
+
+- link:
+    ~/bin:
+    ~/.bash_profile: config/bash_profile
+    ~/.bashrc: config/bashrc
+    ~/.gitconfig: config/gitconfig
+    ~/.gitignore_global: config/gitignore_global
+    ~/.inputrc: config/inputrc
+    ~/.tmux.conf: config/tmux.conf
+    ~/.vimrc: config/vimrc
+    ~/.vim/autoload/plug.vim:
+      path: modules/vim-plug/plug.vim
+
+- shell:
+  -
+    command: vim +PlugInstall +qall
+    description: Installing vim plugins
+    stdout: true

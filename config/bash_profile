@@ -1,0 +1,68 @@
+# tmux setup
+[ -t 1 ] && [ -z "$TMUX" ] && [ -f ~/.tmux-auto ] && [ -x ~/bin/tmx ] && ~/bin/tmx
+
+# Setting PATH for Python 2.7
+# The orginal version is saved in .bash_profile.pysave
+# PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
+# export PATH
+
+# Colored man
+if [ $TERM = "xterm-256color" ]; then
+    # colorful man page
+    export PAGER="`which less` -s"
+    export BROWSER="$PAGER"
+    export LESS_TERMCAP_mb=$'\E[38;5;167m' # begin blinking
+    export LESS_TERMCAP_md=$'\E[38;5;39m' # begin bold
+    export LESS_TERMCAP_me=$'\E[0m' # end mode
+    export LESS_TERMCAP_se=$'\E[38;5;231m' # end standout-mode
+    export LESS_TERMCAP_so=$'\E[38;5;167m' # begin standout-mode - info box
+    export LESS_TERMCAP_us=$'\E[38;5;167m' # begin underline
+    export LESS_TERMCAP_ue=$'\E[0m' # end underline
+    export LESS_TERMCAP_uz=$'\E[0m' # just for export looking by dm4
+fi
+
+# Setting PATH for ~/.bin
+PATH="${PATH}:/Users/findlimit/.bin"
+export PATH
+
+# Setting PATH for coreutils
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+
+# for Android SDK
+PATH="$PATH:/Applications/android-sdk/platform-tools"
+export PATH
+
+
+# Enable Color in Terminal
+export CLICOLOR=1
+export LSCOLORS="Exfxcxdxbxegedabagacad"
+#export LS_COLORS='di=34:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=0:mi=0:ex=35:*.rpm=90'
+eval `dircolors ~/.dir_colors`
+
+# Some aliases
+alias ls='ls --color=auto'
+alias ll='ls -al'
+alias la='ls -a'
+alias o='open'
+
+function git_branch {
+	ref=$(git symbolic-ref HEAD 2> /dev/null) || return;
+	echo "("${ref#refs/heads/}") ";
+}
+export PS1="\[\033k\033\\\\\e[32m\]\A\[\e[33m\] [\w] \[\e[35m\]\$(git_branch)\[\e[0m\]\$ "
+
+
+##
+# Your previous /Users/findlimit/.bash_profile file was backed up as /Users/findlimit/.bash_profile.macports-saved_2011-11-08_at_18:17:12
+##
+
+# MacPorts Installer addition on 2011-11-08_at_18:17:12: adding an appropriate PATH variable for use with MacPorts.
+# export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+# Finished adapting your PATH environment variable for use with MacPorts.
+
+export PATH=/usr/local/bin:$PATH
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+source ~/.profile

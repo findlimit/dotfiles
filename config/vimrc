@@ -1,0 +1,372 @@
+"""""""""""""""""""""""
+" .vimrc by findlimit "
+"                     "
+"""""""""""""""""""""""
+
+call plug#begin()
+Plug 'Lokaltog/vim-easymotion'
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'tpope/vim-surround'
+Plug 'plasticboy/vim-markdown'
+Plug 'sjl/gundo.vim'
+Plug 'simplecommenter'
+Plug 'hexHighlight.vim'
+Plug 'altercation/vim-colors-solarized'
+Plug 'wesleyche/SrcExpl'
+Plug 'Raimondi/delimitMate'
+Plug 'aklt/plantuml-syntax'
+
+" Plugins for snippet
+Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
+
+" Plugins for C-language Tracing Code
+Plug 'taglist.vim'
+
+" Plugins for C#
+"Plug 'OmniSharp/omnisharp-vim'
+
+" Plugins for auto-completion
+if has('python') && filereadable('~/.vim/.ycm_support')
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+else
+    Plug 'AutoComplPop'
+endif
+
+" All of your Plugins must be added before the following line
+call plug#end()            " required
+
+
+" indent
+set expandtab
+set autoindent
+set smartindent
+set cindent
+
+" search
+set ignorecase
+set hls
+set incsearch
+
+" tab and space
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+
+" backup info
+set backup
+set backupdir=$HOME/.vim/backup/
+if exists("*mkdir") && !isdirectory($HOME."/.vim/backup")
+    call mkdir($HOME."/.vim/backup")
+endif
+
+" undo
+set undofile
+set undodir=~/.vim/undo/
+if exists("*mkdir") && !isdirectory($HOME."/.vim/undo")
+    call mkdir($HOME."/.vim/undo")
+endif
+
+" set line break
+"set nowrap
+set linebreak
+set showbreak=>>\ 
+
+" other settings
+set nu
+syntax on
+set ruler
+set ttymouse=xterm2
+set mouse=nicr
+set bs=2
+set nocompatible
+set showcmd
+set clipboard=unnamed
+
+" invisible character
+set nolist
+set listchars=tab:▸\ ,trail:▝,eol:¬
+
+" mininum split window size
+set winminheight=0
+set winminwidth=0
+
+" auto reload vimrc
+autocmd! BufWritePost *vimrc source %
+
+" set filetype
+autocmd BufReadPost,BufNewFile *.tt set filetype=html
+autocmd BufReadPost,BufNewFile httpd*.conf set filetype=apache
+
+" tabs and spaces for filetype
+autocmd FileType eruby      set sw=2 ts=2 softtabstop=2 expandtab
+autocmd FileType html       set sw=2 ts=2 softtabstop=2 expandtab
+autocmd FileType javascript set sw=2 ts=2 softtabstop=2 expandtab
+autocmd FileType json       set sw=2 ts=2 softtabstop=2 expandtab
+autocmd FileType ruby       set sw=2 ts=2 softtabstop=2 expandtab
+autocmd FileType yaml       set sw=2 ts=2 softtabstop=2 expandtab
+
+" Show diff when git commit
+autocmd FileType gitcommit DiffGitCached
+
+" for taglist
+"autocmd BufWritePost *.cpp silent exe "!exctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
+"autocmd BufWritePost *.h silent exe "!exctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
+
+" Save last postion
+if has("autocmd")
+   autocmd BufReadPost *
+      \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+      \   exe "normal g'\"" |
+      \ endif
+endif
+
+" key mapping
+let mapleader=","
+nmap ; :
+vmap ; :
+nmap j gj
+nmap k gk
+vmap j gj
+vmap k gk
+nmap cn :cn<CR>
+nmap cp :cp<CR>
+imap <C-D>      <DEL>
+"nmap <F7>       :w<CR>:!perl %<CR>
+nmap <C-L>      :set nu!<CR>
+nmap <C-n>      gt
+nmap <C-p>      gT
+nmap <C-Tab>    gt
+imap <C-a>      <HOME>
+imap <C-e>      <END>
+imap <C-f>      <RIGHT>
+imap <C-b>      <LEFT>
+nmap <C-J>      ddp==
+nmap <C-K>      ddkP==
+nmap <Leader>n  :NERDTreeToggle<CR>
+nmap <Leader>m  :NERDTreeFind<CR>
+nmap <Leader>g  :GundoToggle<CR>
+nmap <Leader>b  :e ++enc=big5<CR>
+nmap <Leader>u  :e ++enc=utf-8<CR>
+nmap <Leader>p  :set paste!<CR>
+nmap <Leader>r  :set wrap!<CR>
+nmap <Leader>ev :tabnew $MYVIMRC<CR>
+nmap <Leader>h  :set hls!<CR>
+nmap <Leader>s  :w<CR>:source %<CR>
+nmap <Leader>i  :set list!<CR>
+
+" for simplecommenter
+"map <silent>   <Leader>c    <Plug>(do-comment)
+"map <silent>   <Leader>C    <Plug>(un-comment)
+map <silent>   <Leader>/    <Plug>(one-line-comment)
+
+" hexHighlight plugin
+nmap <Leader>l :call HexHighlight()<CR>
+
+" Show syntax highlighting groups for word under cursor
+nmap <C-C> :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+    if !exists("*synstack")
+        return
+    endif
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+
+" for taglist
+nmap <F12> :TlistToggle<CR>
+let Tlist_Use_Right_Window = 1
+
+" Encoding
+set fileencodings=utf-8,big5,euc-jp,gbk,euc-kr,utf-bom,iso8859-1
+
+" color setting
+if $TERM == "xterm-256color" || $TERM == "screen-256color"
+    " set 256 colors
+    set t_Co=256
+elseif $TERM == "xterm"
+    set t_Co=256
+endif
+
+" theme setting
+set cursorline
+set background=dark
+set t_ut=
+silent! colorscheme solarized
+
+" Highlight trailing spaces
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+
+" set status line
+set laststatus=2
+set statusline=%{(&paste)?'[p]':''}
+set statusline+=%m%t
+set statusline+=%=
+set statusline+=(%{mode()})
+set statusline+=\ \ 
+set statusline+=[%{&fenc}]
+set statusline+=\ \ 
+set statusline+=[%{&ft!=''?&ft:'none'}]
+set statusline+=\ \ 
+set statusline+=Col\ %c,\ Line\ %l/%L
+set statusline+=\ \ 
+set statusline+=%p%%\ 
+
+" remove preview window from omni complete
+set completeopt-=preview
+
+" NERDTree
+let NERDTreeQuitOnOpen=1
+
+" simplecommenter
+let g:scomment_default_mapping = 0
+let g:oneline_comment_padding = ''
+
+" UltiSnips
+let g:UltiSnipsSnippetDirectories=["my-snippets", "UltiSnips"]
+
+" YCM
+let g:ycm_key_list_select_completion=['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion=['<C-p>', '<Up>']
+
+if has("gui_running")
+    " set colors
+    set guifont=Monaco:h14
+
+    " window size
+    set lines=100
+    set columns=90
+
+    " hide tool bar
+    set guioptions+=c
+    set guioptions-=e
+    set guioptions-=T
+    set guioptions-=m
+    set guioptions-=r
+    set guioptions-=R
+    set guioptions-=l
+    set guioptions-=L
+
+    " disable input manager
+    set imdisable
+    set antialias
+
+    if has("gui_macvim")
+        " set CMD+ENTER fullscreen
+        set fuopt=maxhorz,maxvert
+    endif
+endif
+
+
+" For SrcExpl
+" // The switch of the Source Explorer 
+nmap <F8> :SrcExplToggle<CR> 
+
+" // Set the height of Source Explorer window 
+let g:SrcExpl_winHeight = 8 
+
+" // Set 100 ms for refreshing the Source Explorer 
+let g:SrcExpl_refreshTime = 100 
+
+" // Set "Enter" key to jump into the exact definition context 
+let g:SrcExpl_jumpKey = "<ENTER>" 
+
+" // Set "Space" key for back from the definition context 
+let g:SrcExpl_gobackKey = "<SPACE>" 
+
+" // In order to avoid conflicts, the Source Explorer should know what plugins
+" // except itself are using buffers. And you need add their buffer names into
+" // below listaccording to the command ":buffers!"
+let g:SrcExpl_pluginList = [ 
+        \ "__Tag_List__", 
+        \ "_NERD_tree_" 
+    \ ] 
+
+" // Enable/Disable the local definition searching, and note that this is not 
+" // guaranteed to work, the Source Explorer doesn't check the syntax for now. 
+" // It only searches for a match with the keyword according to command 'gd' 
+let g:SrcExpl_searchLocalDef = 1 
+
+" // Do not let the Source Explorer update the tags file when opening 
+let g:SrcExpl_isUpdateTags = 0 
+
+" // Set "<F3>" key for displaying the previous definition in the jump list 
+let g:SrcExpl_prevDefKey = "<F5>" 
+
+" // Set "<F4>" key for displaying the next definition in the jump list 
+let g:SrcExpl_nextDefKey = "<F6>" 
+
+
+" For Cscope
+if has('cscope')
+    set cscopetag cscopeverbose
+
+    if has('quickfix')
+        set cscopequickfix=s-,c-,d-,i-,t-,e-
+    endif
+
+    cnoreabbrev csa cs add
+    cnoreabbrev csf cs find
+    cnoreabbrev csk cs kill
+    cnoreabbrev csr cs reset
+    cnoreabbrev css cs show
+    cnoreabbrev csh cs help
+
+    nmap <Leader>cs :cs find s <C-R>=expand("<cword>")<CR><CR>  
+    nmap <Leader>cg :cs find g <C-R>=expand("<cword>")<CR><CR>  
+    nmap <Leader>cc :cs find c <C-R>=expand("<cword>")<CR><CR>  
+    nmap <Leader>ct :cs find t <C-R>=expand("<cword>")<CR><CR>  
+    nmap <Leader>ce :cs find e <C-R>=expand("<cword>")<CR><CR>  
+    nmap <Leader>cf :cs find f <C-R>=expand("<cfile>")<CR><CR>  
+    nmap <Leader>ci :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    nmap <Leader>cd :cs find d <C-R>=expand("<cword>")<CR><CR>2=
+
+"    command -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
+endif
+
+" Autoload Cscope Database
+function! LoadCscope()
+  let db = findfile("cscope.out", ".;")
+  if (!empty(db))
+    let path = strpart(db, 0, match(db, "/cscope.out$"))
+    set nocscopeverbose " suppress 'duplicate connection' error
+    exe "cs add " . db . " " . path
+    set cscopeverbose
+  endif
+endfunction
+au BufEnter * call LoadCscope()
+
+" Toggle QFix Window
+function! GetBufferList()
+  redir =>buflist
+  silent! ls
+  redir END
+  return buflist
+endfunction
+
+function! ToggleList(bufname, pfx)
+  let buflist = GetBufferList()
+  for bufnum in map(filter(split(buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
+    if bufwinnr(bufnum) != -1
+      exec(a:pfx.'close')
+      return
+    endif
+  endfor
+  if a:pfx == 'l' && len(getloclist(0)) == 0
+      echohl ErrorMsg
+      echo "Location List is Empty."
+      return
+  endif
+  let winnr = winnr()
+  exec('botright '.a:pfx.'open')
+  if winnr() != winnr
+    wincmd p
+  endif
+endfunction
+
+"nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
+nmap <silent> <leader>e :call ToggleList("Quickfix List", 'c')<CR>
