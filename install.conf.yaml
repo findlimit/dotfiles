@@ -1,5 +1,10 @@
 - shell:
   -
+    command: xcode-select --install
+    description: Installing necessary command line dev-tool
+    stdin: true
+    stdout: true
+  -
     command: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     description: Installing Homebrew
     stdin: true
