@@ -4,3 +4,9 @@
 [submodule "modules/dotbot"]
 	path = modules/dotbot
     url = https://github.com/anishathalye/dotbot
+[submodule "modules/dircolors-solarized"]
+	path = modules/dircolors-solarized
+	url = https://github.com/seebi/dircolors-solarized.git
+[submodule "modules/fonts"]
+	path = modules/fonts
+	url = https://github.com/powerline/fonts.git
