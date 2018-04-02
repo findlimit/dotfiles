@@ -21,8 +21,9 @@ if [ $TERM = "xterm-256color" ]; then
     export LESS_TERMCAP_uz=$'\E[0m' # just for export looking by dm4
 fi
 
-# Setting PATH for ~/.bin
+# Setting PATH for ~/.bin & ~/bin
 PATH="${PATH}:/Users/findlimit/.bin"
+PATH="${PATH}:/Users/findlimit/bin"
 export PATH
 
 # Setting PATH for coreutils
