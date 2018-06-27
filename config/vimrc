@@ -8,13 +8,15 @@ Plug 'Lokaltog/vim-easymotion'
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'tpope/vim-surround'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'dm4/markdown-preview.vim', { 'for': 'markdown' }
 Plug 'sjl/gundo.vim'
 Plug 'c9s/simple-commenter.vim'
 Plug 'yurifury/hexHighlight'
 Plug 'altercation/vim-colors-solarized'
 Plug 'wesleyche/SrcExpl', { 'on': 'SrcExplToggle' }
 Plug 'Raimondi/delimitMate'
-Plug 'aklt/plantuml-syntax', { 'for': 'uml' }
+Plug 'aklt/plantuml-syntax', { 'for': 'plantuml' }
+Plug 'will133/vim-dirdiff'
 
 " Plugins for snippet
 Plug 'honza/vim-snippets'
@@ -110,6 +112,7 @@ autocmd FileType javascript set sw=2 ts=2 softtabstop=2 expandtab
 autocmd FileType json       set sw=2 ts=2 softtabstop=2 expandtab
 autocmd FileType ruby       set sw=2 ts=2 softtabstop=2 expandtab
 autocmd FileType yaml       set sw=2 ts=2 softtabstop=2 expandtab
+autocmd FileType xml        set sw=2 ts=2 softtabstop=2 expandtab
 
 " Show diff when git commit
 autocmd FileType gitcommit DiffGitCached
@@ -239,7 +242,29 @@ let g:UltiSnipsSnippetDirectories = ["my-snippets", "UltiSnips"]
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:ycm_semantic_triggers = {'cs': ['re! [a-zA-Z_]{2}']}
+let g:ycm_complete_in_comments = 1
+let g:ycm_complete_in_strings = 1
+" remove md from blacklist
+let g:ycm_filetype_blacklist = {
+            \ 'tagbar' : 1,
+            \ 'qf' : 1,
+            \ 'notes' : 1,
+            \ 'unite' : 1,
+            \ 'text' : 1,
+            \ 'vimwiki' : 1,
+            \ 'pandoc' : 1,
+            \ 'infolog' : 1,
+            \ 'mail' : 1
+            \}
 "let g:ycm_always_populate_location_list = 1
+
+" Plantuml
+let g:plantuml_executable_script = 'myplantuml'
+
+" Markdown
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_folding_level = 1
+
 
 if has("gui_running")
     " set colors
@@ -295,9 +320,9 @@ let g:SrcExpl_gobackKey = "<SPACE>"
 " // except itself are using buffers. And you need add their buffer names into
 " // below listaccording to the command ":buffers!"
 let g:SrcExpl_pluginList = [
-        \ "__Tag_List__",
-        \ "_NERD_tree_"
-    \ ]
+            \ "__Tag_List__",
+            \ "_NERD_tree_"
+            \ ]
 
 " // Enable/Disable the local definition searching, and note that this is not
 " // guaranteed to work, the Source Explorer doesn't check the syntax for now.
@@ -338,47 +363,47 @@ if has('cscope')
     nmap <Leader>ci :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
     nmap <Leader>cd :cs find d <C-R>=expand("<cword>")<CR><CR>2=
 
-"    command -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
+    "    command -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
 endif
 
 " Autoload Cscope Database
 function! LoadCscope()
-  let db = findfile("cscope.out", ".;")
-  if (!empty(db))
-    let path = strpart(db, 0, match(db, "/cscope.out$"))
-    set nocscopeverbose " suppress 'duplicate connection' error
-    exe "cs add " . db . " " . path
-    set cscopeverbose
-  endif
+    let db = findfile("cscope.out", ".;")
+    if (!empty(db))
+        let path = strpart(db, 0, match(db, "/cscope.out$"))
+        set nocscopeverbose " suppress 'duplicate connection' error
+        exe "cs add " . db . " " . path
+        set cscopeverbose
+    endif
 endfunction
 au BufEnter * call LoadCscope()
 
 " Toggle QFix Window
 function! GetBufferList()
-  redir =>buflist
-  silent! ls
-  redir END
-  return buflist
+    redir =>buflist
+    silent! ls
+    redir END
+    return buflist
 endfunction
 
 function! ToggleList(bufname, pfx)
-  let buflist = GetBufferList()
-  for bufnum in map(filter(split(buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
-    if bufwinnr(bufnum) != -1
-      exec(a:pfx.'close')
-      return
+    let buflist = GetBufferList()
+    for bufnum in map(filter(split(buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
+        if bufwinnr(bufnum) != -1
+            exec(a:pfx.'close')
+            return
+        endif
+    endfor
+    if a:pfx == 'l' && len(getloclist(0)) == 0
+        echohl ErrorMsg
+        echo "Location List is Empty."
+        return
     endif
-  endfor
-  if a:pfx == 'l' && len(getloclist(0)) == 0
-      echohl ErrorMsg
-      echo "Location List is Empty."
-      return
-  endif
-  let winnr = winnr()
-  exec('botright '.a:pfx.'open')
-  if winnr() != winnr
-    wincmd p
-  endif
+    let winnr = winnr()
+    exec('botright '.a:pfx.'open')
+    if winnr() != winnr
+        wincmd p
+    endif
 endfunction
 
 nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>

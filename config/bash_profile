@@ -68,4 +68,11 @@ export PATH=/usr/local/bin:$PATH
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
+# Cocoaspods
+export GEM_HOME=$HOME/.gem
+export PATH=$GEM_HOME/ruby/2.5.0/bin:$PATH
+
+# Git subcommands completion
+source ~/bin/git-completion.bash
+
 source ~/.asana_token
