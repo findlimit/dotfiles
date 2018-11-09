@@ -1,7 +1,30 @@
 - shell:
   -
+    command: xcode-select --install
+    description: Installing necessary command line dev-tool
+    stdin: true
+    stdout: true
+  -
+    command: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    description: Installing Homebrew
+    stdin: true
+    stdout: true
+  -
+    command: brew bundle --file=config/Brewfile
+    description: brew install the MUST-HAVE
+    stdin: true
+    stdout: true
+  -
     command: git submodule update --init --recursive
     description: Installing submodules
+    stdout: true
+  -
+    command: ./modules/fonts/install.sh
+    description: Installing fonts
+    stdout: true
+  -
+    command: defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/.dotfiles/iTerm2_config/" && defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
+    description: Import iTerm2 config
     stdout: true
 
 - defaults:
@@ -18,6 +41,7 @@
     ~/.gitconfig: config/gitconfig
     ~/.gitignore_global: config/gitignore_global
     ~/.inputrc: config/inputrc
+    ~/.dircolors: modules/dircolors-solarized/dircolors.256dark
     ~/.tmux.conf: config/tmux.conf
     ~/.vimrc: config/vimrc
     ~/.vim/autoload/plug.vim:
