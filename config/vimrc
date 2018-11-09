@@ -12,13 +12,21 @@ Plug 'sjl/gundo.vim'
 Plug 'c9s/simple-commenter.vim'
 Plug 'yurifury/hexHighlight'
 Plug 'altercation/vim-colors-solarized'
-Plug 'wesleyche/SrcExpl', { 'on': 'SrcExplToggle' }
+"Plug 'wesleyche/SrcExpl', { 'on': 'SrcExplToggle' }
 Plug 'Raimondi/delimitMate'
 Plug 'aklt/plantuml-syntax', { 'for': 'uml' }
 
 " Plugins for snippet
 Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
+
+" Plugins for async task support
+Plug 'w0rp/ale'
+Plug 'skywind3000/asyncrun.vim'
+
+" Plugins for javascripts
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 
 " Plugins for C-language Tracing Code
 "Plug 'taglist.vim'
@@ -113,6 +121,9 @@ autocmd FileType yaml       set sw=2 ts=2 softtabstop=2 expandtab
 
 " Show diff when git commit
 autocmd FileType gitcommit DiffGitCached
+
+" Javascript auto format
+autocmd BufWritePost *.js AsyncRun -post=checktime ./node_modules/.bin/eslint --fix %
 
 " for taglist
 "autocmd BufWritePost *.cpp silent exe "!exctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
@@ -240,6 +251,9 @@ let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:ycm_semantic_triggers = {'cs': ['re! [a-zA-Z_]{2}']}
 "let g:ycm_always_populate_location_list = 1
+
+" ale
+let g:ale_sign_error = '●' " Less aggressive than the default '>>'
 
 if has("gui_running")
     " set colors
