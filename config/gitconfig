@@ -8,6 +8,12 @@
     br = branch
     l  = log --oneline --decorate --graph
     ll = log --graph --date-order -C -M --pretty=format:'<%h> %ad [%an] %Cgreen%d%Creset %s' --all --date=short
+	unstage = reset HEAD --
+    cpick = cherry-pick
+	conflicts = diff --name-only --diff-filter=U
+	unmerged = diff -S \"<<<<<<< HEAD\" -S \"=======\" -S \">>>>>>> \" HEAD
+	sweep = !git branch --merged | egrep -v \"(^\\*|master|dev)\" | xargs git branch -d
+    gadd = !sh -c 'git st --short | grep \"$1\" | cut -c3- | xargs git add' -
 [color]
 	ui = true
 [push]
