@@ -31,9 +31,8 @@ export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 # for Android SDK
-PATH="$PATH:/Applications/android-sdk/platform-tools"
+PATH="$PATH:$HOME/Library/Android/sdk/platform-tools"
 export PATH
-
 
 # Enable Color in Terminal
 export CLICOLOR=1
@@ -68,11 +67,23 @@ export PATH=/usr/local/bin:$PATH
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
-# Cocoaspods
-export GEM_HOME=$HOME/.gem
-export PATH=$GEM_HOME/ruby/2.5.0/bin:$PATH
+# Homebrew installed Ruby
+export PATH=/usr/local/opt/ruby/bin:$PATH
+export PATH=/usr/local/lib/ruby/gems/2.6.0/bin:$PATH
 
 # Git subcommands completion
 source ~/bin/git-completion.bash
 
+# Export $USERPROFILE
+export USERPROFILE=$HOME
+
+# fastlane
+export PATH="$HOME/.fastlane/bin:$PATH"
+
 source ~/.asana_token
+
+# thefuck
+eval $(thefuck --alias fuck)
+
+# `Failed to set local category` warning workaround
+export LC_ALL=en_US.UTF-8
