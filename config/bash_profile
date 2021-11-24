@@ -71,14 +71,11 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 export PATH=/usr/local/opt/ruby/bin:$PATH
 export PATH=/usr/local/lib/ruby/gems/2.6.0/bin:$PATH
 
-# Git subcommands completion
-source ~/bin/git-completion.bash
+# HomeBrew bash completion
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 
 # Export $USERPROFILE
 export USERPROFILE=$HOME
-
-# fastlane
-export PATH="$HOME/.fastlane/bin:$PATH"
 
 source ~/.asana_token
 
@@ -87,3 +84,9 @@ eval $(thefuck --alias fuck)
 
 # `Failed to set local category` warning workaround
 export LC_ALL=en_US.UTF-8
+
+# Setting session title helper
+function title {
+    echo -ne "\033]0;"$*"\007"
+}
+
