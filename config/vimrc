@@ -20,7 +20,7 @@ Plug 'will133/vim-dirdiff'
 
 " Plugins for snippet
 Plug 'honza/vim-snippets'
-Plug 'SirVer/ultisnips'
+"Plug 'SirVer/ultisnips'
 
 " Plugins for async task support
 Plug 'w0rp/ale'

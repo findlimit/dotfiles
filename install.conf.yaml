@@ -38,6 +38,7 @@
     ~/bin:
     ~/.bash_profile: config/bash_profile
     ~/.bashrc: config/bashrc
+    ~/.zshrc: config/zshrc
     ~/.gitconfig: config/gitconfig
     ~/.gitignore_global: config/gitignore_global
     ~/.inputrc: config/inputrc

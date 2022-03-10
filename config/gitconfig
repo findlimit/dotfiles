@@ -1,6 +1,6 @@
 [user]
 	name = Peter Hsu
-	email = findlimit@gmail.com
+	email = peter.hsu@fourdesire.com
 [alias]
     st = status
     ci = commit
@@ -16,8 +16,6 @@
     gadd = !sh -c 'git st --short | grep \"$1\" | cut -c3- | xargs git add' -
 [color]
 	ui = true
-[push]
-	default = matching
 [core]
 	editor = vim
     excludesfile = ~/.gitignore_global
