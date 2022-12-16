@@ -7,3 +7,9 @@
 [submodule "modules/dircolors-solarized"]
 	path = modules/dircolors-solarized
 	url = https://github.com/seebi/dircolors-solarized.git
+[submodule "config/oh-my-zsh_custom/plugins/git-flow-completion"]
+	path = config/oh-my-zsh_custom/plugins/git-flow-completion
+	url = https://github.com/bobthecow/git-flow-completion.git
+[submodule "config/oh-my-zsh_custom/plugins/zsh-autosuggestions"]
+	path = config/oh-my-zsh_custom/plugins/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions.git
