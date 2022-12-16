@@ -1,0 +1,148 @@
+format = """\
+$username\
+$aws\
+$gcloud\
+[ ](bg:#55C8EC)\
+[](fg:#55C8EC bg:#7BDDCB)\
+$directory\
+[ ](bg:#7BDDCB)\
+[](fg:#7BDDCB bg:#A7D971)\
+$git_branch\
+$git_status\
+[](fg:#A7D971 bg:#D7D872)\
+$c\
+$elixir\
+$elm\
+$golang\
+$haskell\
+$java\
+$julia\
+$nodejs\
+$ruby\
+$nim\
+$rust\
+[](fg:#D7D872 bg:#FFD876)\
+$docker_context\
+[](fg:#FFD876)\
+[ ]()
+"""
+
+# Disable the blank line at the start of the prompt
+add_newline = false
+command_timeout = 1000
+
+# You can also replace your username with a neat symbol like  to save some space
+[username]
+show_always = true
+style_user = "bg:#55C8EC fg:#000000"
+style_root = "bg:#55C8EC fg:#000000"
+format = '[ $user]($style)'
+
+[aws]
+symbol = "a"
+style = "bg:#55C8EC fg:#000000"
+format = '[/$symbol:($profile:)($region)]($style)'
+[aws.region_aliases]
+ap-northeast-1 = "ne1"
+
+[gcloud]
+symbol = "g"
+style = "bg:#55C8EC fg:#000000"
+format = '[/$symbol:$account]($style)'
+
+[directory]
+style = "bg:#7BDDCB fg:#000000"
+format = "[ $path]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = ""
+"Downloads" = ""
+"Music" = ""
+"Pictures" = ""
+
+[git_branch]
+symbol = ""
+style = "bg:#A7D971 fg:#000000"
+format = '[ $symbol $branch]($style)'
+
+[git_status]
+style = "bg:#A7D971 fg:#ff0000"
+format = '[($all_status$ahead_behind) ]($style)'
+conflicted = "="
+ahead = "⇡"
+behind = "⇣"
+diverged = "⇕"
+up_to_date = ""
+untracked = "±"
+stashed = "$"
+modified = "!"
+staged = '[++\($count\)](green)'
+renamed = "»"
+deleted = "x"
+
+[c]
+symbol = ""
+style = "bg:#D7D872 fg:#000000"
+format = '[ $symbol ($version) ]($style)'
+
+[elixir]
+symbol = ""
+style = "bg:#D7D872 fg:#000000"
+format = '[ $symbol ($version) ]($style)'
+
+[elm]
+symbol = ""
+style = "bg:#D7D872 fg:#000000"
+format = '[ $symbol ($version) ]($style)'
+
+[golang]
+symbol = ""
+style = "bg:#D7D872 fg:#000000"
+format = '[ $symbol ($version) ]($style)'
+
+[ruby]
+symbol = ""
+style = "bg:#D7D872 fg:#000000"
+format = '[ $symbol ($version) ]($style)'
+
+[haskell]
+symbol = ""
+style = "bg:#D7D872 fg:#000000"
+format = '[ $symbol ($version) ]($style)'
+
+[java]
+symbol = ""
+style = "bg:#D7D872 fg:#000000"
+format = '[ $symbol ($version) ]($style)'
+
+[julia]
+symbol = ""
+style = "bg:#D7D872 fg:#000000"
+format = '[ $symbol ($version) ]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:#D7D872 fg:#000000"
+format = '[ $symbol ($version) ]($style)'
+
+[nim]
+symbol = ""
+style = "bg:#D7D872 fg:#000000"
+format = '[ $symbol ($version) ]($style)'
+
+[rust]
+symbol = ""
+style = "bg:#D7D872 fg:#000000"
+format = '[ $symbol ($version) ]($style)'
+
+[scala]
+symbol = ""
+style = "bg:#D7D872 fg:#000000"
+format = '[ $symbol ($version) ]($style)'
+
+[docker_context]
+symbol = ""
+style = "bg:#FFD876 fg:#000000"
+format = '[ $context ]($style)'

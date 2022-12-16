@@ -1,0 +1,42 @@
+#!/bin/sh
+
+ACTION=$1
+APP_NAME=$2
+APK=$3
+OBB=$4
+CODE=$5
+
+APP_IDENTIFIER="com.fourdesire.plantnanny2"
+
+get_app_name () {
+    if [[ APP_NAME = "pn2" ]]; then
+        APP_IDENTIFIER="com.fourdesire.plantnanny2"
+        return 1
+    elif [[ APP_NAME = "jn" ]]; then
+        APP_IDENTIFIER="com.fourdesire.journal"
+        return 1
+    else
+        return 0
+    fi
+}
+
+if [[ $ACTION == "install" ]]; then
+    # install
+    if ! get_app_name "APP_NAME"; then
+        exit -1
+    fi
+
+    adb install $APK
+    adb shell mkdir sdcard/Android/obb/com.fourdesire.plantnanny2
+    adb push $OBB sdcard/Android/obb/com.fourdesire.plantnanny2/main.$CODE.com.fourdesire.plantnanny2.obb
+
+elif [[ $ACTION == "uninstall" ]]; then
+    # uninstall
+    if ! get_app_name "APP_NAME"; then
+        exit -1
+    fi
+
+    adb uninstall $APP_IDENTIFIER
+else
+    echo "Unknown command: " + $ACTION
+fi

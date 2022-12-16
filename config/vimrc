@@ -210,7 +210,7 @@ endif
 set cursorline
 set background=dark
 set t_ut=
-silent! colorscheme solarized
+"silent! colorscheme solarized
 
 " Highlight trailing spaces
 highlight ExtraWhitespace ctermbg=red guibg=red

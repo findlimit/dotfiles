@@ -19,10 +19,6 @@
     description: Installing submodules
     stdout: true
   -
-    command: ./modules/fonts/install.sh
-    description: Installing fonts
-    stdout: true
-  -
     command: defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/.dotfiles/iTerm2_config/" && defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
     description: Import iTerm2 config
     stdout: true
@@ -47,6 +43,7 @@
     ~/.vimrc: config/vimrc
     ~/.vim/autoload/plug.vim:
       path: modules/vim-plug/plug.vim
+    ~/.config/starship.toml: config/starship.toml
 
 - shell:
   -

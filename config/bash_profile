@@ -80,7 +80,7 @@ export USERPROFILE=$HOME
 source ~/.asana_token
 
 # thefuck
-eval $(thefuck --alias fuck)
+# eval $(thefuck --alias fuck)
 
 # `Failed to set local category` warning workaround
 export LC_ALL=en_US.UTF-8
@@ -90,3 +90,4 @@ function title {
     echo -ne "\033]0;"$*"\007"
 }
 
+export EDITOR=vim
