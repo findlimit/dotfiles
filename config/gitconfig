@@ -12,7 +12,7 @@
     cpick = cherry-pick
 	conflicts = diff --name-only --diff-filter=U
 	unmerged = diff -S \"<<<<<<< HEAD\" -S \"=======\" -S \">>>>>>> \" HEAD
-	sweep = !git branch --merged | egrep -v \"(^\\*|master|dev)\" | xargs git branch -d
+	sweep = !git branch --merged | egrep -v \"(^\\*|main|master|dev)\" | xargs git branch -d
     gadd = !sh -c 'git st --short | grep \"$1\" | cut -c3- | xargs git add' -
 [color]
 	ui = true
