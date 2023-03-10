@@ -45,7 +45,10 @@
     ~/.vim/autoload/plug.vim:
       path: modules/vim-plug/plug.vim
     ~/.config/starship.toml: config/starship.toml
-    ~/.oh-my-zsh/custom: config/oh-my-zsh_custom
+    ~/.oh-my-zsh/custom/plugins/:
+      create: true
+      glob: true
+      path: config/oh-my-zsh_custom/plugins/*
 
 - shell:
   -

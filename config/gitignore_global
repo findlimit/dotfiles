@@ -3,7 +3,6 @@
 .DS_Store
 
 # VS & VS Code User Pref Folders
-.vscode/
 .vs/
 
 # GitHub wiki folder
