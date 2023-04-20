@@ -1,35 +1,17 @@
-- shell:
-  -
-    command: xcode-select --install
-    description: Installing necessary command line dev-tool
-    stdin: true
-    stdout: true
-  -
-    command: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    description: Installing Homebrew
-    stdin: true
-    stdout: true
-  -
-    command: brew bundle --file=config/Brewfile
-    description: brew install the MUST-HAVE
-    stdin: true
-    stdout: true
-  -
-    command: git submodule update --init --recursive
-    description: Installing submodules
-    stdout: true
-  -
-    command: defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/.dotfiles/iTerm2_config/" && defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
-    description: Import iTerm2 config
-    stdout: true
-
 - defaults:
     link:
       relink: true
       create: true
       force: true
+    shell:
+      stderr: true
 
-- clean: ['~']
+- clean: ['~', '~/.oh-my-zsh/custom/', '~/.oh-my-zsh/custom/plugins/']
+
+- shell:
+  - [sh pre-install.sh, Running pre installation script]
+  - [brew bundle --file=config/Brewfile, Installing Homebrew formulas from Brewfile]
+  - [defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/.dotfiles/iTerm2_config/" && defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true, Import iTerm2 config]
 
 - link:
     ~/bin:
@@ -51,7 +33,5 @@
       path: config/oh-my-zsh_custom/plugins/*
 
 - shell:
-  -
-    command: vim +PlugInstall +qall
-    description: Installing vim plugins
-    stdout: true
+  - [vim +PlugInstall +qall, Installing vim plugins]
+  - [git submodule update --init --recursive, Installing submodules]
