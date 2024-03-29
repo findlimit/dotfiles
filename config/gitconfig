@@ -1,13 +1,18 @@
 [user]
 	name = Peter Hsu
-	email = peter.hsu@fourdesire.com
+	email = peter.hsu@sparkful.com
+[feature]
+    # Support repos with large number of files, improving git status and git
+    # commit performance. See `man git-config` for details
+    # https://github.com/starship/starship/issues/1617#issuecomment-885959971
+    manyFiles = true
 [alias]
     st = status
     ci = commit
     co = checkout
     br = branch
-    l  = log --oneline --decorate --graph
-    ll = log --graph --date-order -C -M --pretty=format:'<%h> %ad [%an] %Cgreen%d%Creset %s' --all --date=short
+    l  = log --graph --pretty='%C(yellow)<%h>%Creset %ad %C(blue)[%an]%Creset %C(auto)%d%Creset %s' --date=short
+    ll = log --graph --date-order -C -M --pretty=format:'%C(yellow)<%h>%Creset %ad %C(blue)[%an]%Creset %C(auto)%d%Creset %s' --all --date=short
 	unstage = reset HEAD --
     cpick = cherry-pick
 	conflicts = diff --name-only --diff-filter=U
@@ -26,3 +31,9 @@
 	required = true
 [push]
 	autoSetupRemote = true
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential

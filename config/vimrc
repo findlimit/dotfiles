@@ -17,6 +17,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'Raimondi/delimitMate'
 Plug 'aklt/plantuml-syntax', { 'for': 'plantuml' }
 Plug 'will133/vim-dirdiff'
+Plug 'junegunn/vim-easy-align'
 
 " Plugins for snippet
 Plug 'honza/vim-snippets'
@@ -91,8 +92,12 @@ set showbreak=>>\
 set nu
 syntax on
 set ruler
-set ttymouse=xterm2
-set mouse=nicr
+if has("mouse_sgr")
+    set ttymouse=sgr
+else
+    set ttymouse=xterm2
+end
+set mouse=a
 set bs=2
 set nocompatible
 set showcmd
@@ -426,4 +431,10 @@ nmap <silent> <leader>e :call ToggleList("Quickfix List", 'c')<CR>
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+" EasyAlign
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
