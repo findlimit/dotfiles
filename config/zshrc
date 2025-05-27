@@ -114,10 +114,26 @@ export LANGUAGE=en_US
 alias o="open"
 
 # eval `gdircolors ~/.dircolors`
-export LS_COLORS="di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# export LS_COLORS="di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43"
+# zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+# JAVA
+export JAVA_HOME=$(/usr/libexec/java_home)
+export PATH="$JAVA_HOME/bin:$PATH"
+export ANDROID_HOME="/opt/homebrew/share/android-commandlinetools/"
+export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
+
+# Docker completion (zsh)
+if command -v docker &>/dev/null; then
+  source <(docker completion zsh)
+fi
+
+# Homebrew setup env variables
+eval $(/opt/homebrew/bin/brew shellenv)
+
+# Homebrew configure completions
+autoload -Uz compinit
+compinit
 
 unsetopt nomatch
 eval "$(starship init zsh)"
-
-export JAVA_HOME=/Applications/Unity/2021.3.16f1/PlaybackEngines/AndroidPlayer/OpenJDK

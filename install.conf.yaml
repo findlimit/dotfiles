@@ -35,8 +35,6 @@
 
 - shell:
   - [sh pre-install.sh, Running pre installation script]
-  - [brew bundle --file=config/Brewfile, Installing Homebrew formulas from Brewfile]
-  - [defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/.dotfiles/iTerm2_config/" && defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true, Import iTerm2 config]
 
 - link:
     ~/bin:
