@@ -117,3 +117,13 @@
     description: Installing vim plugins
     stdin: true
     stdout: true
+  -
+    command: |
+      # Setup Xcode
+      if command -v xcodebuild >/dev/null 2>&1; then
+        echo "Setup Xcode..."
+        ./xcode_config/config-preference.sh
+      fi
+    description: Setup Xcode environment
+    stdin: true
+    stdout: true
