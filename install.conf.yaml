@@ -1,7 +1,13 @@
 - shell:
   -
-    command: xcode-select --install
-    description: Installing necessary command line dev-tool
+    command: |
+      if ! xcode-select -p >/dev/null 2>&1; then
+        echo "Installing Xcode Command Line Tools..."
+        xcode-select --install || echo "Installation command triggered; please follow GUI instructions."
+      else
+        echo "Xcode Command Line Tools already installed."
+      fi
+    description: Conditionally install Xcode Command Line Tools
     stdin: true
     stdout: true
   -
@@ -59,19 +65,19 @@
     description: Install oh-my-zsh
     stdin: true
     stdout: true
-  -
-    command: |
-      # Install or update Mac-CLI
-      if ! command -v mac >/dev/null 2>&1; then
-        echo "Installing Mac-CLI..."
-        /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/guarinogabriel/mac-cli/master/mac-cli/tools/install)"
-      else
-        echo "Mac-CLI already installed. Updating..."
-        /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/guarinogabriel/mac-cli/master/mac-cli/tools/update)"
-      fi
-    description: Install or update Mac-CLI
-    stdin: true
-    stdout: true
+#   -
+#     command: |
+#       # Install or update Mac-CLI
+#       if ! command -v mac >/dev/null 2>&1; then
+#         echo "Installing Mac-CLI..."
+#         /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/guarinogabriel/mac-cli/master/mac-cli/tools/install)"
+#       else
+#         echo "Mac-CLI already installed. Updating..."
+#         /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/guarinogabriel/mac-cli/master/mac-cli/tools/update)"
+#       fi
+#     description: Install or update Mac-CLI
+#     stdin: true
+#     stdout: true
   -
     command: |
       # Change shell to zsh if not already default
@@ -105,5 +111,9 @@
       path: config/oh-my-zsh_custom/plugins/*
 
 - shell:
-  - [vim +PlugInstall +qall, Installing vim plugins]
-  - [git submodule update --init --recursive, Installing submodules]
+  -
+    command: |
+      script -q /dev/null vim +PlugInstall +qall
+    description: Installing vim plugins
+    stdin: true
+    stdout: true
