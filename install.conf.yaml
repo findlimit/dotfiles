@@ -5,8 +5,21 @@
     stdin: true
     stdout: true
   -
-    command: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-    description: Installing Homebrew
+    command: |
+      if ! command -v brew >/dev/null 2>&1; then
+        echo "Installing Homebrew..."
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+        # Set up brew in current shell
+        if [ -f /opt/homebrew/bin/brew ]; then
+          eval "$(/opt/homebrew/bin/brew shellenv)"
+        elif [ -f /usr/local/bin/brew ]; then
+          eval "$(/usr/local/bin/brew shellenv)"
+        fi
+      else
+        echo "Homebrew already installed."
+      fi
+    description: Conditionally install Homebrew and initialize shell environment
     stdin: true
     stdout: true
   -
@@ -34,7 +47,43 @@
 - clean: ['~', '~/.oh-my-zsh/custom/', '~/.oh-my-zsh/custom/plugins/']
 
 - shell:
-  - [sh pre-install.sh, Running pre installation script]
+  -
+    command: |
+      # Install oh-my-zsh if not already installed
+      if [ ! -d "$HOME/.oh-my-zsh" ]; then
+        echo "Installing oh-my-zsh..."
+        /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+      else
+        echo "oh-my-zsh already installed."
+      fi
+    description: Install oh-my-zsh
+    stdin: true
+    stdout: true
+  -
+    command: |
+      # Install or update Mac-CLI
+      if ! command -v mac >/dev/null 2>&1; then
+        echo "Installing Mac-CLI..."
+        /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/guarinogabriel/mac-cli/master/mac-cli/tools/install)"
+      else
+        echo "Mac-CLI already installed. Updating..."
+        /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/guarinogabriel/mac-cli/master/mac-cli/tools/update)"
+      fi
+    description: Install or update Mac-CLI
+    stdin: true
+    stdout: true
+  -
+    command: |
+      # Change shell to zsh if not already default
+      if [ "$SHELL" != "/bin/zsh" ]; then
+        echo "Changing default shell to zsh..."
+        chsh -s /bin/zsh
+      else
+        echo "Already using zsh."
+      fi
+    description: Set default shell to zsh
+    stdin: true
+    stdout: true
 
 - link:
     ~/bin:
